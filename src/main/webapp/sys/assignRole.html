@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+	<link rel="stylesheet" href="../public/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../public/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../public/css/main.css">
+	<style>
+	.tree li {
+        list-style-type: none;
+		cursor:pointer;
+	}
+	</style>
+  </head>
+
+  <body>
+
+
+    <div id="assignRole" class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12 main">
+				<ol class="breadcrumb">
+				  <li><a href="#">首页</a></li>
+				  <li><a href="#">数据列表</a></li>
+				  <li class="active">分配角色</li>
+				</ol>
+			<div class="panel panel-default">
+			  <div class="panel-body">
+				<form role="form" class="form-inline">
+					<div class="form-group">
+						<label for="users">用户列表</label><br>
+						<select id="users"  @click="findUserNotHasRole"  >
+
+							<option v-for="user in users" :value="user.userId">{{user.username}}</option>
+
+						</select>
+					</div>
+				  <div class="form-group">
+					<label for="hasRole">未分配角色列表</label><br>
+					<select id="hasRole" class="form-control" multiple size="10" style="width:100px;overflow-y:auto;">
+
+                        <option v-for="role in roles" :value="role.roleId">{{role.roleName}}</option>
+                    </select>
+				  </div>
+<!--				  <div class="form-group">-->
+<!--                        <ul>-->
+<!--                            <li class="btn btn-default glyphicon glyphicon-chevron-right"></li>-->
+<!--                            <br>-->
+<!--                            <li class="btn btn-default glyphicon glyphicon-chevron-left" style="margin-top:20px;"></li>-->
+<!--                        </ul>-->
+<!--				  </div>-->
+<!--				  <div class="form-group" style="margin-left:40px;">-->
+<!--					<label for="hasRole">未分配角色列表</label><br>-->
+<!--					<select id="hasRole" class="form-control" multiple size="10" style="width:100px;overflow-y:auto;">-->
+<!--                        -->
+<!--                        <option value="qc">QC</option>-->
+<!--&lt;!&ndash;                        <option value="pg">PG</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                        &ndash;&gt;-->
+<!--&lt;!&ndash;                        <option value="sa">SA</option>&ndash;&gt;-->
+<!--                    </select>-->
+<!--				  </div>-->
+					<button  class="btn btn-success " type="button" @click="assignRole">
+						<i class="fa fa-plus"></i>&nbsp;&nbsp;<span class="bold">分配</span>
+					</button>
+				</form>
+			  </div>
+			</div>
+        </div>
+      </div>
+    </div>
+
+	<script src="../public/libs/jquery.min.js"></script>
+	<script src="../public/libs/bootstrap.min.js"></script>
+	<script src="../public/libs/vue.min.js"></script>
+	<script src="../public/js/sys/assignRole.js"></script>
+    <script src="../public/js/common.js"></script>
+        <script type="text/javascript">
+            $(function () {
+			    $(".list-group-item").click(function(){
+				    if ( $(this).find("ul") ) {
+						$(this).toggleClass("tree-closed");
+						if ( $(this).hasClass("tree-closed") ) {
+							$("ul", this).hide("fast");
+						} else {
+							$("ul", this).show("fast");
+						}
+					}
+				});
+            });
+        </script>
+  </body>
+</html>

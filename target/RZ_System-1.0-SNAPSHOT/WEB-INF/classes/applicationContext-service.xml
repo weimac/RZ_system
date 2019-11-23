@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<import resource="classpath:applicationContext.xml"></import>
+
+	<context:component-scan base-package="com.weikun.service,com.weikun.utils"></context:component-scan>
+
+	<!--事务配置
+        1）事务的管理器
+        2）事务的详情
+        3）aop配置
+    -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<tx:advice id="myAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="query*" propagation="NOT_SUPPORTED" isolation="DEFAULT" read-only="true"/>
+			<tx:method name="find*" propagation="NOT_SUPPORTED" isolation="DEFAULT" read-only="true"/>
+			<tx:method name="search*" propagation="NOT_SUPPORTED" isolation="DEFAULT" read-only="true"/>
+			<tx:method name="get*" propagation="NOT_SUPPORTED" isolation="DEFAULT" read-only="true"/>
+			<tx:method name="*" propagation="REQUIRED" isolation="DEFAULT"/>
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:advisor advice-ref="myAdvice" pointcut="execution(* com.weikun.service.impl.*.*(..))"></aop:advisor>
+	</aop:config>
+
+
+
+
+
+</beans>
